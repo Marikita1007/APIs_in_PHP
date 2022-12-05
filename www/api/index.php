@@ -9,6 +9,9 @@ require dirname(__DIR__) . "/vendor/autoload.php";
 
 set_exception_handler("ErrorHandler::handleException");
 
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
 //これを取り除くには、 parse_url 関数を使用して PHP_URL_PATH を第二引数として渡します。By doing so, it won't show the URL after ?
 //ex:?page=1 wouldn't show up ,but /task/123 shows up
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
@@ -35,6 +38,11 @@ if($resource != "tasks"){
 //require dirname(__DIR__) . "/src/TaskController.php";//dirname関数と__DIR__定数を使って、現在のフォルダの親フォルダを取得します。
 
 header("Content-Type: application/json; charset=UTF-8"); //This shows Content-Type as application/json instead of text/html
+
+//$database = new Database("{{hostname with port number }}", "{{database name}}", "{{user name}}", "{{user_password}}");
+$database = new Database($_ENV["DB_HOST"], $_ENV["DB_NAME"], $_ENV["DB_USER"], $_ENV["DB_PASS"]);
+
+//$database -> getConnection(); //Now .env file is working, we can remove getConneciton call 
 
 $controller = new TaskController;//Create a new object of the class (TaskCOntroller in src folder)
 
