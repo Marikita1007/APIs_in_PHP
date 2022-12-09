@@ -13,7 +13,7 @@ class TaskGateway
     }
 
     //getAll function : タスクのレコードをすべて取得するメソッド。これは配列を返す。
-    public function getALL(): array
+    public function getALL(): array 
     {
 
         $sql = "SELECT * 
@@ -28,14 +28,34 @@ class TaskGateway
         
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-
             $row['is_completed'] = (bool) $row['is_completed'];
 
             $data[] = $row;
+
         }
 
         return $data;
-        
     }
 
+    public function get(string $id): array | false
+    {
+        $sql = "SELECT *
+                FROM task
+                WHERE id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($data != false){
+            
+            $data['is_completed'] = (bool) $data['is_completed'];
+        }
+        
+        return $data;
+    }
 }

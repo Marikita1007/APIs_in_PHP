@@ -30,7 +30,8 @@ class TaskController
             switch($method){
                 
                 case"GET":
-                    echo "show $id";
+                    //echo "show $id";
+                    echo json_encode($this->gateway->get($id));
                     break;
 
                 case "PATCH":
