@@ -15,13 +15,26 @@ class TaskGateway
     //getAll function : タスクのレコードをすべて取得するメソッド。これは配列を返す。
     public function getALL(): array
     {
+
         $sql = "SELECT * 
                 FROM task 
                 ORDER BY name";
         
         $stmt = $this->conn->query($sql);
 
-        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+        //return $stmt->fetchALL(PDO::FETCH_ASSOC); Insted of writing like this, write down below to 
+        //change the boolean data type from 1 or 0 to true or false. This is optional.
+        $data = [];
+        
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+
+            $row['is_completed'] = (bool) $row['is_completed'];
+
+            $data[] = $row;
+        }
+
+        return $data;
         
     }
 
