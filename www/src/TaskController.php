@@ -17,7 +17,11 @@ class TaskController
                 echo json_encode($this->gateway->getALL());
                 
             }elseif($method == "POST"){
-                echo "create";
+                //echo "create";
+                //print_r($_POST); 
+                $data = (array) json_decode(file_get_contents("php://input"), true);
+                var_dump($data);
+
             }else{
                 
                 //http_response_code(405);
