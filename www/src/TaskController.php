@@ -2,6 +2,11 @@
 
 class TaskController
 {
+    public function __construct(private TaskGateway $gateway)
+    {
+        
+    }
+
     public function processRequests(string $method, ?string $id): void//$method coontains request methos such as GET,PATCH etc. $id comes from URL so it's a string.
     //?string $id : $id(引数)の型宣言の前に疑問符を付けることで、nullableとしてマークすることができます。
     {

@@ -39,11 +39,12 @@ if($resource != "tasks"){
 
 header("Content-Type: application/json; charset=UTF-8"); //This shows Content-Type as application/json instead of text/html
 
-//$database = new Database("{{hostname with port number }}", "{{database name}}", "{{user name}}", "{{user_password}}");
+//$database = new Database("{{hostname with port number}}", "{{database name}}", "{{user name}}", "{{user_password}}");
 $database = new Database($_ENV["DB_HOST"], $_ENV["DB_NAME"], $_ENV["DB_USER"], $_ENV["DB_PASS"]);
 
 //$database -> getConnection(); //Now .env file is working, we can remove getConneciton call 
+$task_gateway = new TaskGateway($database);
 
-$controller = new TaskController;//Create a new object of the class (TaskCOntroller in src folder)
+$controller = new TaskController($task_gateway);//Create a new object of the class (TaskCOntroller in src folder)
 
 $controller->processRequests($_SERVER['REQUEST_METHOD'], $id);//$id send null if there is no id in HTTP.  
