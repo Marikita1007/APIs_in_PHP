@@ -12,6 +12,7 @@ class TaskGateway
         $this->conn = $database->getConnection();//4:次にコンストラクタで、データベースオブジェクトの getConnection メソッドを呼び出し、この をプロパティに格納します。
     }
 
+    //getAll function : タスクのレコードをすべて取得するメソッド。これは配列を返す。
     public function getALL(): array
     {
         $sql = "SELECT * 
