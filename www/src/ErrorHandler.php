@@ -3,6 +3,7 @@
 class ErrorHandler
 {
 
+    //if post methods is sent with empty data, this error handler shows up 
     public static function handleError(
         int $errno,
         string $errstr,
