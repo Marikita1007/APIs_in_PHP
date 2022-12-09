@@ -27,11 +27,21 @@ class TaskController
 
         } else {
 
+            $task = $this->gateway->get($id);
+
+            if($task === false){
+
+                $this->respondNotFound($id);
+                return;//If this does happen, we don't want to continue in this method, so we'll simply return at this point.
+            
+            }
+
             switch($method){
                 
                 case"GET":
                     //echo "show $id";
-                    echo json_encode($this->gateway->get($id));
+                    //echo json_encode($this->gateway->get($id));
+                    echo json_encode($task);//We added 404(respondNotFound function) for not found id numbers so we show $task.
                     break;
 
                 case "PATCH":
@@ -52,6 +62,12 @@ class TaskController
     {
         http_response_code(405);
         header("Allow: $allowed_methods");
+    }
+
+    private function respondNotFound(string $id): void
+    {
+        http_response_code(404);
+        echo json_encode(["message" => "Task with ID $id not found"]);
     }
 
 }
