@@ -80,9 +80,9 @@ class TaskGateway
 
         $stmt->bindValue(":is_completed", $data["is_completed"] ?? false,
                         PDO::PARAM_BOOL);
-
-        $stmt->execute();
         
+        $stmt->execute();
+    
         return $this->conn->lastInsertId();
     }
 }
