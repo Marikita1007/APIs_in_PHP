@@ -4,7 +4,7 @@ class TaskController
 {
     public function __construct(private TaskGateway $gateway)
     {
-        
+
     }
 
     public function processRequests(string $method, ?string $id): void//$method coontains request methos such as GET,PATCH etc. $id comes from URL so it's a string.
@@ -13,7 +13,9 @@ class TaskController
         if($id === null){
 
             if($method == "GET"){
-                echo "index";
+                //echo "index";
+                echo json_encode($this->gateway->getALL());
+                
             }elseif($method == "POST"){
                 echo "create";
             }else{

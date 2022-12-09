@@ -12,5 +12,16 @@ class TaskGateway
         $this->conn = $database->getConnection();//4:次にコンストラクタで、データベースオブジェクトの getConnection メソッドを呼び出し、この をプロパティに格納します。
     }
 
-    
+    public function getALL(): array
+    {
+        $sql = "SELECT * 
+                FROM task 
+                ORDER BY name";
+        
+        $stmt = $this->conn->query($sql);
+
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+        
+    }
+
 }
