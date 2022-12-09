@@ -85,4 +85,37 @@ class TaskGateway
     
         return $this->conn->lastInsertId();
     }
+
+    public function update(string $id, array $data)
+    {
+        $fields = [];
+
+        if(array_key_exists("name", $data)){
+
+            $fields["name"] = [
+                $data["name"],
+                PDO::PARAM_STR
+            ];
+        }
+
+        if(array_key_exists("priority", $data)){
+
+            $fields["priority"] = [
+                $data["priority"],
+                //PDO::PARAM_INT
+                $data["priority"] === null ? PDO::PARAM_NULL : PDO::PARAM_INT
+            ];
+        }
+
+        if(array_key_exists("is_completed", $data)){
+
+            $fields["is_completed"] = [
+                $data["is_completed"],
+                PDO::PARAM_BOOL
+            ];
+        }
+
+        print_r($fields);
+        exit;
+    }
 }

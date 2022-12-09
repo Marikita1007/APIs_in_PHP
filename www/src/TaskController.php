@@ -73,7 +73,8 @@ class TaskController
                         return;
                     }
 
-                    echo "update $id";
+                    //echo "update $id";
+                    $this->gateway->update($id, $data);
                     break;
 
                 case "DELETE":
