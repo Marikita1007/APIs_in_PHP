@@ -62,6 +62,17 @@ class TaskController
                     break;
 
                 case "PATCH":
+
+                    $data = (array) json_decode(file_get_contents("php://input"), true);
+                    
+                    $errors = $this->getValidationError($data, false);
+    
+                    if(!empty($errors)){
+    
+                        $this->respondUnprocessableEntity($errors);
+                        return;
+                    }
+
                     echo "update $id";
                     break;
 
@@ -101,11 +112,11 @@ class TaskController
 
     //If post method has name(databa column name),but empty data, it gets inside this function.  
     //private method to validate this array.
-    private function getValidationError(array $data): array
+    private function getValidationError(array $data, bool $is_new = true): array
     {
         $errors = [];
 
-        if(empty($data["name"])){
+        if($is_new && empty($data["name"])){
 
             $errors[] = "name is required";
         }
