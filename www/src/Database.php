@@ -20,7 +20,7 @@ class Database
             //Add down below because Json returns data as a string regardless of its data type.
             //By adding them integer becomes numbers. データベース内の数値は、JSONとして返すときに文字列に変換されない。
             PDO::ATTR_EMULATE_PREPARES => false,
-            PDO::ATTR_STRINGIFY_FETCHES => false
+            PDO::ATTR_STRINGIFY_FETCHES => false,
         ]);
     }
 }
