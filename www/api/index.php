@@ -49,6 +49,14 @@ if(empty($_SERVER["HTTP_X_API_KEY"])){
 
 
 $api_key = $_SERVER["HTTP_X_API_KEY"];//$_SERVER URL : https://www.php.net/manual/ja/reserved.variables.server.php
+
+
+//$database = new Database("{{hostname with port number}}", "{{database name}}", "{{user name}}", "{{user_password}}");
+$database = new Database($_ENV["DB_HOST"], $_ENV["DB_NAME"], $_ENV["DB_USER"], $_ENV["DB_PASS"]);
+
+//51. Create a table data gateway class for the user table
+$user_gateway = new UserGateway($database);
+
 //$api_key = $_GET["api-key"];
 //print_r($_SERVER);//X-API-Key:APIKEY
 echo $api_key;
@@ -58,9 +66,6 @@ exit;
 //require dirname(__DIR__) . "/src/TaskController.php";//dirname関数と__DIR__定数を使って、現在のフォルダの親フォルダを取得します。
 
 header("Content-Type: application/json; charset=UTF-8"); //This shows Content-Type as application/json instead of text/html
-
-//$database = new Database("{{hostname with port number}}", "{{database name}}", "{{user name}}", "{{user_password}}");
-$database = new Database($_ENV["DB_HOST"], $_ENV["DB_NAME"], $_ENV["DB_USER"], $_ENV["DB_PASS"]);
 
 //$database -> getConnection(); //Now .env file is working, we can remove getConneciton call 
 $task_gateway = new TaskGateway($database);
