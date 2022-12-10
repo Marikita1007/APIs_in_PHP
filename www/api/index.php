@@ -35,8 +35,19 @@ if($resource != "tasks"){
     exit;
 }
 
+//49. Send the API key with the request: query string or request header
 //認証の詳細を渡すためリクエストヘッダを使用する方が一般的。リクエストヘッダは、URLに値を追加しないので、リクエストが明確。APIキーを送信するため、X-API-keyというキーを持つヘッダーを使用するのが一般的。
-//ex : http http://localhost/Udemy/APIs_in_PHP/www/api/tasks X-API-Key:APIKEY 
+//ex : http http://localhost/Udemy/APIs_in_PHP/www/api/tasks X-API-Key:APIKEY *X-API-KeyとAPIKEYの間には":"を入れること!
+
+//50. Check the API key is present in the request and return 400 if not
+if(empty($_SERVER["HTTP_X_API_KEY"])){
+
+    http_response_code(400);
+    echo json_encode(["message" => "missing API key"]);
+    exit;
+}
+
+
 $api_key = $_SERVER["HTTP_X_API_KEY"];//$_SERVER URL : https://www.php.net/manual/ja/reserved.variables.server.php
 //$api_key = $_GET["api-key"];
 //print_r($_SERVER);//X-API-Key:APIKEY
