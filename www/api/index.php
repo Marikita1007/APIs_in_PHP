@@ -35,6 +35,14 @@ if($resource != "tasks"){
     exit;
 }
 
+//認証の詳細を渡すためリクエストヘッダを使用する方が一般的。リクエストヘッダは、URLに値を追加しないので、リクエストが明確。APIキーを送信するため、X-API-keyというキーを持つヘッダーを使用するのが一般的。
+//ex : http http://localhost/Udemy/APIs_in_PHP/www/api/tasks X-API-Key:APIKEY 
+$api_key = $_SERVER["HTTP_X_API_KEY"];//$_SERVER URL : https://www.php.net/manual/ja/reserved.variables.server.php
+//$api_key = $_GET["api-key"];
+//print_r($_SERVER);//X-API-Key:APIKEY
+echo $api_key;
+exit;
+
 //Because now we have composer Autoloader, we don't need this.
 //require dirname(__DIR__) . "/src/TaskController.php";//dirname関数と__DIR__定数を使って、現在のフォルダの親フォルダを取得します。
 
