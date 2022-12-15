@@ -56,9 +56,6 @@ if( ! $auth->authenticateAPIKey()){
 
 $user_id = $auth->getUserID();
 
-var_dump($user_id);
-exit;
-
 //$api_key = $_GET["api-key"];
 //print_r($_SERVER);//X-API-Key:APIKEY
 //echo $api_key;
@@ -70,6 +67,6 @@ exit;
 //$database -> getConnection(); //Now .env file is working, we can remove getConneciton call 
 $task_gateway = new TaskGateway($database);
 
-$controller = new TaskController($task_gateway);//Create a new object of the class (TaskCOntroller in src folder)
+$controller = new TaskController($task_gateway, $user_id);//Create a new object of the class (TaskCOntroller in src folder)
 
 $controller->processRequests($_SERVER['REQUEST_METHOD'], $id);//$id send null if there is no id in HTTP.  
