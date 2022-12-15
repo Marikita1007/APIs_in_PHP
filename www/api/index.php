@@ -59,9 +59,6 @@ if( ! $auth->authenticateAccessToken()){
     exit;
 } 
 
-echo "valid authentication";
-exit;
-
 $user_id = $auth->getUserID();
 
 //$api_key = $_GET["api-key"];
@@ -77,4 +74,5 @@ $task_gateway = new TaskGateway($database);
 
 $controller = new TaskController($task_gateway, $user_id);//Create a new object of the class (TaskCOntroller in src folder)
 
-$controller->processRequests($_SERVER['REQUEST_METHOD'], $id);//$id send null if there is no id in HTTP.  
+$controller->processRequests($_SERVER['REQUEST_METHOD'], $id);//$id send null if there is no id in HTTP.
+
