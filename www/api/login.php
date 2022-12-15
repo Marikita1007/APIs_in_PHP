@@ -45,4 +45,16 @@ if (!password_verify($data["password"], $user["password_hash"])){
     exit;
 }
 
-echo json_encode("Successful authentication");
+//echo json_encode("Successful authentication");
+//63. Generate an encoded access token containing the user details
+//Remember the idea with an access token is that we can authorise a request to the API without doing
+$payload = [
+    "id" => $user["id"],
+    "name" => $user["name"]
+];
+
+$access_token = base64_encode(json_encode($payload));
+
+echo json_encode([
+    "access_token" => $access_token
+]);
