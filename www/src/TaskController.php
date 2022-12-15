@@ -2,7 +2,8 @@
 
 class TaskController
 {
-    public function __construct(private TaskGateway $gateway)
+    public function __construct(private TaskGateway $gateway, 
+                                private int $user_id)
     {
 
     }
@@ -14,7 +15,7 @@ class TaskController
 
             if($method == "GET"){
                 //echo "index";
-                echo json_encode($this->gateway->getALL());
+                echo json_encode($this->gateway->getALLForUser($this->user_id));
                 
             }elseif($method == "POST"){
                 //echo "create";
