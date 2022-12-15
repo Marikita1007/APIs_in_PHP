@@ -54,6 +54,11 @@ if( ! $auth->authenticateAPIKey()){
     exit;
 } 
 
+$user_id = $auth->getUserID();
+
+var_dump($user_id);
+exit;
+
 //$api_key = $_GET["api-key"];
 //print_r($_SERVER);//X-API-Key:APIKEY
 //echo $api_key;
