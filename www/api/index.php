@@ -48,6 +48,13 @@ $database = new Database($_ENV["DB_HOST"], $_ENV["DB_NAME"], $_ENV["DB_USER"], $
 //51. Create a table data gateway class for the user table
 $user_gateway = new UserGateway($database);
 
+//ex request: http post http://localhost/Udemy/APIs_in_PHP/www/api/tasks "Authorization:Bearer {password}"
+var_dump($_SERVER["HTTP_AUTHORIZATION"]);
+//$headers = apache_request_headers();
+//echo $headers["Authorization"];
+
+exit;
+
 $auth = new Auth($user_gateway);
 
 if( ! $auth->authenticateAPIKey()){
