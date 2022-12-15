@@ -42,7 +42,7 @@ if($resource != "tasks"){
 //50. Check the API key is present in the request and return 400 if not
 if(empty($_SERVER["HTTP_X_API_KEY"])){
 
-    http_response_code(400);
+    http_response_code(400);//400 : Bad Request
     echo json_encode(["message" => "missing API key"]);
     exit;
 }
@@ -50,17 +50,24 @@ if(empty($_SERVER["HTTP_X_API_KEY"])){
 
 $api_key = $_SERVER["HTTP_X_API_KEY"];//$_SERVER URL : https://www.php.net/manual/ja/reserved.variables.server.php
 
-
 //$database = new Database("{{hostname with port number}}", "{{database name}}", "{{user name}}", "{{user_password}}");
 $database = new Database($_ENV["DB_HOST"], $_ENV["DB_NAME"], $_ENV["DB_USER"], $_ENV["DB_PASS"]);
 
 //51. Create a table data gateway class for the user table
 $user_gateway = new UserGateway($database);
 
+//52. Authenticate the API key and return a 401 status code if invalid
+//To call the request : http URL(file path) X-API-Key:USER_API_KEY
+if ($user_gateway->getByAPIKey($api_key) === false){
+    http_response_code(401);//401 : Unauthorized
+    echo json_encode(["message" => "Invalid API key"]);
+    exit;
+}
+
 //$api_key = $_GET["api-key"];
 //print_r($_SERVER);//X-API-Key:APIKEY
-echo $api_key;
-exit;
+//echo $api_key;
+//exit;
 
 //Because now we have composer Autoloader, we don't need this.
 //require dirname(__DIR__) . "/src/TaskController.php";//dirname関数と__DIR__定数を使って、現在のフォルダの親フォルダを取得します。
