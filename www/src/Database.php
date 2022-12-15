@@ -15,7 +15,10 @@ class Database
 
     public function getConnection(): PDO
     {
+        
         if($this->conn === null){
+
+
             //$dsn stand for data source name 
             $dsn = "mysql:host={$this->host};dbname={$this->name};charset=utf8";
 
