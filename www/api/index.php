@@ -53,7 +53,9 @@ $user_gateway = new UserGateway($database);
 //$headers = apache_request_headers();
 //echo $headers["Authorization"];
 
-$auth = new Auth($user_gateway);
+$codec = new JWTCodec($_ENV["SECRET_KEY"]); 
+
+$auth = new Auth($user_gateway, $codec);
 
 if( ! $auth->authenticateAccessToken()){
     exit;
