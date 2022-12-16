@@ -59,4 +59,14 @@ class RefreshTokenGateway
 
         return $stmt->fetch(PDO::FETCH_ASSOC);//定数を渡してfetchメソッドを呼び出すと、データが連想配列として取り込まれる。
     }
+
+    public function deleteExpired(): int
+    {
+        $sql = "DELETE FROM refresh_token
+                WHERE expires_at < UNIX_TIMESTAMP()";
+
+        $stmt = $this->conn->query($sql);
+
+        return $stmt->rowCount();
+    }
 }
