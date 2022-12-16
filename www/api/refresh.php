@@ -52,3 +52,10 @@ if($user === false){
 
 //var_dump($user);
 require __DIR__ . "/tokens.php";
+
+//This will store the refresh token in the database when we issue it.
+$refresh_token_gateway = new RefreshTokenGateway($database, $_ENV["SECRET_KEY"]);
+
+$refresh_token_gateway->delete($data["token"]);
+
+$refresh_token_gateway->create($refresh_token, $refresh_token_expiry);
