@@ -53,6 +53,7 @@ $payload = [
     "name" => $user["name"]
 ];
 
+//このアクセストークンは、ユーザーのIDと名前をJONでエンコード(0、1の組み合わせ（コード）と文字の対応表』を別の対応表に切り替えること」)し、次にBase64でエンコードする単純な文字列。このトークンを検証するときは、このプロセスを逆にして解読するだけ。これは簡単に偽造可能。base64_encodeでなく、安全なアクセストークンを作成する方法が必要。そこで、業界標準の方法、JSON Web Tokens もしくは JWTsを使用する。
 $access_token = base64_encode(json_encode($payload));
 
 echo json_encode([
