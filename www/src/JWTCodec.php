@@ -3,6 +3,11 @@
 //This is a secure method to create create a Token.
 class JWTCodec
 {
+    public function __construct(private string $key)
+    {
+        
+    }
+
     public function encode(array $payload): string
     {
         $header = json_encode([
@@ -18,7 +23,7 @@ class JWTCodec
         // 規格によれば、秘密キーは少なくともハッシュ出力と同じサイズの56ビットが必要。
         $signature = hash_hmac("sha256",// アルゴリズムに「sha256」を指定して、hash_hmac関数を呼び出す。
                                 $header . "." . $payload,// ハッシュ化するデータは、トークンのヘッダー部分とペイロード部分を"."で区切ったもの。
-                                "4226452948404D635166546A576E5A7234753778214125442A462D4A614E6452",// この引数はオンラインジェネレータで生成したキー。
+                                $this->key,// この引数はオンラインジェネレータで生成したキー。
                                 true);
 
         $signature = $this->base64urlEncode($signature);//ハッシュ値に対してbase64urlEncodeメソッドを呼び出す。
@@ -39,7 +44,8 @@ class JWTCodec
         // 規格によれば、秘密キーは少なくともハッシュ出力と同じサイズの56ビットが必要。
         $signature = hash_hmac("sha256",// アルゴリズムに「sha256」を指定して、hash_hmac関数を呼び出す。
                                 $matches["header"] . "." . $matches["payload"],// ハッシュ化するデータは、トークンのヘッダー部分とペイロード部分を"."で区切ったもの。
-                                "4226452948404D635166546A576E5A7234753778214125442A462D4A614E6452",// この引数はオンラインジェネレータで生成したキー。
+                                //71. Pass in the secret key used for hashing as a dependency
+                                $this->key,// この引数はオンラインジェネレータで生成したキー。
                                 true);
 
         $signature_from_token = $this->base64urlDecode($matches["signature"]);

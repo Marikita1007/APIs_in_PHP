@@ -60,7 +60,7 @@ $payload = [
 //$access_token = base64_encode(json_encode($payload));
 
 //69. Generate a JWT access token in the login endpoint containing JWT claims
-$codec = new JWTCodec;
+$codec = new JWTCodec($_ENV["SECRET_KEY"]);//71. Pass in the secret key used for hashing as a dependency
 $access_token = $codec->encode($payload);
 
 echo json_encode([
