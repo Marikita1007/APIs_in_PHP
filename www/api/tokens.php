@@ -17,11 +17,13 @@ $payload = [
 
 $access_token = $codec->encode($payload);
 
+$refresh_token_expiry = time() + 43200;
+
 //78. Issue a refresh token in addition to the access token when logging in
 //To avoid users to relogin to get a refresh token
 $refresh_token = $codec->encode([
     "sub" => $user["id"],
-    "exp" => time() + 43200
+    "exp" => $refresh_token_expiry
 ]);
 
 echo json_encode([

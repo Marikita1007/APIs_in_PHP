@@ -49,3 +49,7 @@ if (!password_verify($data["password"], $user["password_hash"])){
 $codec = new JWTCodec($_ENV["SECRET_KEY"]);//71. Pass in the secret key used for hashing as a dependency
 
 require __DIR__ . "/tokens.php";
+
+$refresh_token_gateway = new RefreshTokenGateway($database, $_ENV["SECRET_KEY"]);
+
+$refresh_token_gateway->create($refresh_token, $refresh_token_expiry);
