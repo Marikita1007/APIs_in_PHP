@@ -64,6 +64,14 @@ $payload = [
 $codec = new JWTCodec($_ENV["SECRET_KEY"]);//71. Pass in the secret key used for hashing as a dependency
 $access_token = $codec->encode($payload);
 
+//78. Issue a refresh token in addition to the access token when logging in
+//To avoid users to relogin to get a refresh token
+$refresh_token = $codec->encode([
+    "sub" => $user["id"],
+    "exp" => time() + 43200
+]);
+
 echo json_encode([
-    "access_token" => $access_token
+    "access_token" => $access_token,
+    "refresh_token" => $refresh_token
 ]);
