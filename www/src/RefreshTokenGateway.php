@@ -42,4 +42,21 @@ class RefreshTokenGateway
 
         return $stmt->rowCount();//It returns the rowCount(), which will be the number of rows that were deleted
     }
+
+    public function getByToken(string $token): array | false
+    {
+        $hash = hash_hmac("sha256", $token, $this->key);
+
+        $sql = "SELECT *
+                FROM refresh_token
+                WHERE token_hash = :token_hash";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":token_hash", $hash, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);//定数を渡してfetchメソッドを呼び出すと、データが連想配列として取り込まれる。
+    }
 }
